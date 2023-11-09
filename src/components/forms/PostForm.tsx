@@ -1,24 +1,28 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { Models } from "appwrite"
+import { useForm } from "react-hook-form"
 import{ useNavigate } from 'react-router-dom'
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { PostValidation } from "@/lib/validation"
+import { useToast } from "../ui/use-toast"
+import { useUserContext } from "@/context/AuthContext"
+import FileUploader from "../shared/FileUploader"
+import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutations"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
-import FileUploader from "../shared/FileUploader"
-import { PostValidation } from "@/lib/validation"
-import { Models } from "appwrite"
-import { useCreatePost } from "@/lib/react-query/queriesAndMutations"
-import { useUserContext } from "@/context/AuthContext"
-import { toast, useToast } from "../ui/use-toast"
 
 type PostFormProps = {
   post?: Models.Document
+  action: 'Create' | 'Update'
 }
 
-const PostForm = ({ post }: PostFormProps) => {
+const PostForm = ({ post, action }: PostFormProps) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost()
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } = useUpdatePost()
+
+
   const { user } = useUserContext()
   const { toast } = useToast()
   const navigate = useNavigate()
@@ -35,6 +39,23 @@ const PostForm = ({ post }: PostFormProps) => {
  
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+    if(post && action === 'Update'){
+      const updatedPost = await updatePost({
+        ...values,
+        postId: post.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl,
+      })
+
+      if(!updatedPost){
+        toast({
+          title: 'Please try again.'
+        })
+      }
+
+      return navigate(`/posts/${post.$id}`)
+    }
+
     const newPost = await createPost({
       ...values,
       userId: user.id,
@@ -58,7 +79,7 @@ const PostForm = ({ post }: PostFormProps) => {
           <FormItem>
             <FormLabel className="shad-fom_label">Caption</FormLabel>
             <FormControl>
-            <Textarea className="shad-textarea custom-scrollbar" placeholder="shadcn" {...field} />
+            <Textarea className="shad-textarea custom-scrollbar" placeholder="About the post" {...field} />
             </FormControl>
             <FormMessage className="shad-form_message" />
           </FormItem>
@@ -105,7 +126,10 @@ const PostForm = ({ post }: PostFormProps) => {
         />
         <div className="flex gap-4 items-center justify-end">
           <Button type="button" className="shad-button_dark_4">Cancel</Button>
-          <Button type="submit" className="shad-button_primary whitespace-nowrap">Submit</Button>
+          <Button type="submit" className="shad-button_primary whitespace-nowrap" disabled={isLoadingCreate || isLoadingUpdate}>
+            {isLoadingCreate || isLoadingUpdate && 'Loading...'}
+            {action} Post
+          </Button>
         </div>
       </form>
   </Form>
