@@ -1,27 +1,13 @@
-# React + TypeScript + Vite
+## FunMoments
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Tecnologias utilizadas
+-  [Vite](https://vitejs.dev/) como herramiento de desarrollo.
+- [React-router-dom](https://reactrouter.com/en/main) para el enrutamiento de la aplicacion.
+- [Zod](https://zod.dev/) para la validacion de formularios.
+- [React dropZone](https://www.npmjs.com/package/react-dropzone) para la utilidad de drag and drop en html.
+- [Shadcn](https://ui.shadcn.com/) para diseños de formularios.
+- [React-hook-form](https://react-hook-form.com/) para la validacion de formularios.
+- [Tailwind](https://tailwindcss.com/) para el estilo de los componentes mediante clases.
+- Se utilizo [Typescript](https://www.typescriptlang.org/) para la reduccion de errores.
+- [Apprite](https://appwrite.io/) como base de datos para los usuarios y información del mismo.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
