@@ -1,3 +1,5 @@
+import { Models } from "appwrite";
+
 export type IcontextType = {
   user: IUser;
   isLoading: boolean;
@@ -55,3 +57,42 @@ export type INavLink = {
     username: string;
     password: string;
   };
+
+  export interface StabBlockProps {
+    value: string | number
+    label: string
+  }
+
+  export type UserCardProps = {
+    user: Models.Document;
+  };
+
+  export type SearchResultProps = {
+    isSearchFetching: boolean;
+    searchedPosts: Models.DocumentList<Models.Document> | undefined;
+  };
+
+  export type ProfileUploaderProps = {
+    fieldChange: (files: File[]) => void;
+    mediaUrl: string;
+  };
+
+  export type PostStatsProps = {
+    post?: Models.Document
+        userId: string
+    }
+
+    export type PostCardProps = {
+      post: Models.Document
+  }
+
+  export type GridPostListProps = {
+    posts: Models.Document[]
+    showUser?: boolean
+    showStats?: boolean
+  }
+
+  export type FileUploaderProps = {
+    fieldChange: (FILES: File[]) => void
+    mediaUrl: string
+  }

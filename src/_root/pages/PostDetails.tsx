@@ -1,10 +1,10 @@
-import Loader from "@/components/shared/Loader";
-import PostStats from "@/components/shared/PostStats";
-import { Button } from "@/components/ui/button";
+import { Link, useParams } from "react-router-dom";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetPostById } from "@/lib/react-query/queriesAndMutations";
 import { formatDateString } from "@/lib/utils";
-import { Link, useParams } from "react-router-dom";
+import Loader from "@/components/shared/Loader";
+import PostStats from "@/components/shared/PostStats";
+import { Button } from "@/components/ui/button";
 const PostDetails = () => {
   const { id } = useParams();
   const { data: post, isPending } = useGetPostById(id || "");
