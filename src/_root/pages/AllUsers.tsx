@@ -10,7 +10,7 @@ const AllUsers = () => {
   if (isErrorCreators) {
     toast({ title: "Something went wrong." });
     return (
-      <p>There was an error fetching users.</p>
+      <p className="h3-bold md:h2-bold text-left w-full">There was an error fetching users.</p>
     )
   }
 
