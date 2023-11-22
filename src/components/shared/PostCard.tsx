@@ -7,7 +7,11 @@ import { useUserContext } from "@/context/AuthContext";
 const PostCard = ({ post }: PostCardProps) => {
   const { user } = useUserContext();
 
-  if (!post.creator) return;
+  if (!post.creator) {
+    return (
+      <p>There was an error with the post</p>
+    )
+  }
 
   return (
     <div className="post-card">
